@@ -1,7 +1,6 @@
 import json
 from django.core.management import BaseCommand
-from wayneapp.constants import CommandsConstants as Constants
-from wayneapp.services import SchemaLoader, logging, settings
+from wayneapp.services import SchemaLoader, logging
 from wayneapp.models import JsonSchema
 
 
@@ -22,7 +21,6 @@ class Command(BaseCommand):
 
     def _create_update_json_schema(self, type: str, version: str, data: str):
         schema = JsonSchema.objects.filter(type=type, version=version)
-
         schema_data = {}
         if data != '':
             schema_data = json.loads(data)
