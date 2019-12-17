@@ -11,7 +11,8 @@ class SchemaLoader:
         self._schema_package = importlib.import_module(settings.SCHEMA_PACKAGE_NAME)
 
     def load(self, business_entity: str, version: str) -> str:
-        file_content = pkgutil.get_data(settings.SCHEMA_PACKAGE_NAME, business_entity + '/' + business_entity + '_' + version + '.json')
+        file_content = pkgutil.get_data(settings.SCHEMA_PACKAGE_NAME,
+                                        business_entity + '/' + business_entity + '_' + version + '.json')
         if file_content is None:
             return '{}'
 
@@ -40,7 +41,7 @@ class SchemaLoader:
 
     def _get_version_from_file_name(self, filename: str):
         data = filename.split("_")
-        version = data[len(data)-1][:-5]
+        version = data[len(data) - 1][:-5]
 
         return version
 
@@ -62,24 +63,21 @@ class SchemaLoader:
 
     def get_all_json_schemas(self):
         schema_directory = self._schema_package.__path__[0]
-        #business_entity_names = self.get_all_business_entity_names()
 
-        versions = set()
         schema_files = set()
         for (dirpath, dirnames, filenames) in os.walk(schema_directory):
             for filename in filenames:
                 data = filename.split("_")
-                business_entity = data[0]
-                if business_entity is '':
-                    continue
                 version = data[len(data) - 1][:-5]
+                business_entity = filename.rpartition('_')[0]
+
+                if business_entity is '' or '__init_' in business_entity or version is '':
+                    continue
 
                 schema_files.add(json.dumps({
                     'type': business_entity,
                     'version': version,
                     'data': self.load(business_entity, version)
                 }))
-
-
 
         return schema_files
