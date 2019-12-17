@@ -7,4 +7,5 @@ class WayneappConfig(AppConfig):
 
 
 class JsonSchemaConfig(AppConfig):
-    name = settings.SCHEMA_APP_LABEL
+    name = settings.APP_LABEL + '.' + settings.SCHEMA_APP_LABEL
+    #label = settings.APP_LABEL+'.'+settings.SCHEMA_APP_LABEL

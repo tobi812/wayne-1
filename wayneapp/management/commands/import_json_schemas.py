@@ -1,7 +1,7 @@
 import json
 from django.core.management import BaseCommand
 from wayneapp.services import SchemaLoader, logging
-from wayneapp.models import JsonSchema
+from wayneapp.models import WayneJsonSchema
 
 
 class Command(BaseCommand):
@@ -20,13 +20,13 @@ class Command(BaseCommand):
             self._create_update_json_schema(schema_data['type'], schema_data['version'], schema_data['data'])
 
     def _create_update_json_schema(self, type: str, version: str, data: str):
-        schema = JsonSchema.objects.filter(type=type, version=version)
+        schema = WayneJsonSchema.objects.filter(type=type, version=version)
         schema_data = {}
         if data != '':
             schema_data = json.loads(data)
 
         if schema.exists() is False:
-            json_schema = JsonSchema()
+            json_schema = WayneJsonSchema()
             json_schema.version = version
             json_schema.type = type
             json_schema.schema = schema_data

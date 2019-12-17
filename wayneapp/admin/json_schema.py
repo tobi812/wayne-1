@@ -2,7 +2,7 @@ import json
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from wayneapp.models import JsonSchema
+from wayneapp.models import WayneJsonSchema
 from wayne import settings
 
 if not settings.WAYNE_ADMIN.get('DELETE_ENABLED'):
@@ -33,4 +33,4 @@ class JsonSchemaAdmin(admin.ModelAdmin):
         }
 
 
-admin.site.register(JsonSchema, JsonSchemaAdmin)
+admin.site.register(WayneJsonSchema, JsonSchemaAdmin)
