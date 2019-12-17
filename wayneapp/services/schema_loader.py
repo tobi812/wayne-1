@@ -1,6 +1,7 @@
 import os
 import pkgutil
 import re
+import json
 from django.conf import settings
 import importlib
 
@@ -58,3 +59,27 @@ class SchemaLoader:
         version = 'v' + str(version)
 
         return version
+
+    def get_all_json_schemas(self):
+        schema_directory = self._schema_package.__path__[0]
+        #business_entity_names = self.get_all_business_entity_names()
+
+        versions = set()
+        schema_files = set()
+        for (dirpath, dirnames, filenames) in os.walk(schema_directory):
+            for filename in filenames:
+                data = filename.split("_")
+                business_entity = data[0]
+                if business_entity is '':
+                    continue
+                version = data[len(data) - 1][:-5]
+
+                schema_files.add(json.dumps({
+                    'type': business_entity,
+                    'version': version,
+                    'data': self.load(business_entity, version)
+                }))
+
+
+
+        return schema_files

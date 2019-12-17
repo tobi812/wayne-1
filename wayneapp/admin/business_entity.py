@@ -34,7 +34,7 @@ class ReadOnlyAdmin(admin.ModelAdmin):
         self._entity_manager.delete_by_queryset(queryset)
 
     def data_prettified(self, model):
-        json_data = json.dumps(model.data, sort_keys=True, indent=2)
+        json_data = json.dumps(model.schema, sort_keys=True, indent=2)
         return mark_safe('<pre id="json-renderer" class="json-document">' + json_data + '</pre>')
 
     data_prettified.short_description = 'data'
