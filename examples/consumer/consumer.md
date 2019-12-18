@@ -6,7 +6,7 @@ It will continuously read the messages and print them to sys.stdout.
 To start the consumer script locally, build and run the docker image:
 
 ```
-cd exampleconsumer/
+cd examples/consumer/
 docker build -t "exampleconsumer" .
 docker run --net wayne_wayne-network exampleconsumer
 ```
