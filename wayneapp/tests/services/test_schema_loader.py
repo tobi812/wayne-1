@@ -53,6 +53,6 @@ class TestSchemaLoader(TestCase):
         schema_list = self._schema_loader.get_all_json_schemas()
         for schema in schema_list:
             schema_data = json.loads(schema)
-            self.assertEqual(self._business_entity, schema_data['type'])
+            self.assertEqual(self._business_entity, schema_data['business_entity'])
 
         self.assertEqual(2, len(schema_list))
