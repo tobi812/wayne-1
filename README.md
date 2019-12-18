@@ -24,6 +24,18 @@ Model classes can be generated based on the JSON schema definitions by running t
 `$ python manage.py generatemodels`
 
 
+## Migrate and import json schemas
+Run the commands to generate/migrate json schema table
+
+`python manage.py makemigrations jsonschemaapp`
+
+`python manage.py migrate jsonschemaapp`
+
+Run the command to import json schemas into db
+
+`python manage.py import_json_schemas`
+
+
 ## API Authentication
 - [How to add an Auth Token for a Service?](docs/add_service_client.md)
 

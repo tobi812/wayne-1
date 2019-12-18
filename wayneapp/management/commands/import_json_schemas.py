@@ -1,7 +1,7 @@
 import json
 from django.core.management import BaseCommand
 from wayneapp.services import SchemaLoader, logging
-from wayneapp.models import WayneJsonSchema
+from wayneapp.models import JsonSchemaApp
 
 
 class Command(BaseCommand):
@@ -15,21 +15,30 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         schema_list = self._schema_loader.get_all_json_schemas()
 
+        if len(schema_list) is 0:
+            self._logger.error('No schemas defined!')
+            return 0
+
+        self._logger.info('Schema import started!')
+
         for schema in schema_list:
             schema_data = json.loads(schema)
-            self._create_update_json_schema(schema_data['type'], schema_data['version'], schema_data['data'])
+            self._create_update_json_schema(schema_data['business_entity'], schema_data['version'], schema_data['data'])
 
-    def _create_update_json_schema(self, type: str, version: str, data: str):
-        schema = WayneJsonSchema.objects.filter(type=type, version=version)
-        schema_data = {}
-        if data != '':
-            schema_data = json.loads(data)
+        self._logger.info('Schemas imported successfully!')
+
+        return 0
+
+    def _create_update_json_schema(self, business_entity: str, version: str, data: str):
+        schema = JsonSchemaApp.objects.filter(business_entity=business_entity, version=version)
+
+        schema_data = json.loads(data) if data != '' else {}
 
         if schema.exists() is False:
-            json_schema = WayneJsonSchema()
+            json_schema = JsonSchemaApp()
             json_schema.version = version
-            json_schema.type = type
+            json_schema.business_entity = business_entity
             json_schema.schema = schema_data
             json_schema.save()
         else:
-            schema.update(type=type, version=version, schema=schema_data)
+            schema.update(business_entity=business_entity, version=version, schema=schema_data)

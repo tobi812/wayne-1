@@ -22,7 +22,7 @@ APP_LABEL = 'wayneapp'
 SCHEMA_PACKAGE_NAME = 'wayne_json_schema'
 
 # Json schema application label
-SCHEMA_APP_LABEL = 'waynejsonschema'
+SCHEMA_APP_LABEL = 'jsonschemaapp'
 
 # chunk size for exporting data
 DEFAULT_CHUNK_SIZE = 100

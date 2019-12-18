@@ -4,8 +4,8 @@ from model_utils.models import TimeStampedModel
 from wayne import settings
 
 
-class WayneJsonSchema(TimeStampedModel):
-    type = models.TextField(null=False)
+class JsonSchemaApp(TimeStampedModel):
+    business_entity = models.TextField(null=False)
     version = models.TextField(null=False)
     schema = JSONField(null=False)
 

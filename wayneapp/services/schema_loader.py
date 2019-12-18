@@ -75,7 +75,7 @@ class SchemaLoader:
                     continue
 
                 schema_files.add(json.dumps({
-                    'type': business_entity,
+                    'business_entity': business_entity,
                     'version': version,
                     'data': self.load(business_entity, version)
                 }))
